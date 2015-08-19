@@ -42,7 +42,8 @@ function createFiles (files, argv, cb) {
   const dir = argv.directory
 
   const fns = files.map(function (file) {
-    const tempDir = path.resolve(path.join(argv.dirname, '../templates'))
+    const parent = path.resolve(module.parent.filename)
+    const tempDir = path.resolve(path.join(parent, '../templates'))
     const inFile = path.join(tempDir, file.replace(/^\./, '_.'))
     const outFile = path.join(dir, file)
 
