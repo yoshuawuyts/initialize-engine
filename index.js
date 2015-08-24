@@ -19,7 +19,7 @@ function initializeEngine (opts, argv) {
 
   const fns = [
     runPre.bind(null, opts.pre, argv),
-    createFiles.bind(null, opts.files, argv),
+    createFiles.bind(null, opts.files, argv, opts.templates),
     installDeps.bind(null, opts.devDependencies, argv)
   ]
   series(fns, function (err) {
@@ -37,13 +37,16 @@ function runPre (arr, argv, cb) {
 }
 
 // create files
-// (obj, obj, fn) -> null
-function createFiles (files, argv, cb) {
-  const dir = argv.directory
-
-  const fns = files.map(function (file) {
+// (obj, obj, str, fn) -> null
+function createFiles (files, argv, templates, cb) {
+  if (!templates) {
     const parent = path.resolve(module.parent.filename)
-    const tempDir = path.resolve(path.join(parent, '../templates'))
+    templates = path.join(parent, '../templates')
+  }
+
+  const dir = argv.directory
+  const fns = files.map(function (file) {
+    const tempDir = path.resolve(templates)
     const inFile = path.join(tempDir, file.replace(/^\./, '_.'))
     const outFile = path.join(dir, file)
 
