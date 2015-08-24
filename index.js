@@ -45,7 +45,9 @@ function createFiles (files, argv, templates, cb) {
   }
 
   const dir = argv.directory
-  const fns = files.map(function (file) {
+  parallel(files.map(mapFn), cb)
+
+  function mapFn (file) {
     const tempDir = path.resolve(templates)
     const inFile = path.join(tempDir, file.replace(/^\./, '_.'))
     const outFile = path.join(dir, file)
@@ -66,8 +68,7 @@ function createFiles (files, argv, templates, cb) {
         cb(null, mt)
       }
     }
-  })
-  parallel(fns, cb)
+  }
 }
 
 // install npm dependencies
