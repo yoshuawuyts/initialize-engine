@@ -5,15 +5,17 @@ const mustache = require('mustache')
 const through = require('through2')
 const assert = require('assert')
 const xtend = require('xtend')
+const noop = require('noop2')
 const path = require('path')
 const fs = require('fs')
 
 module.exports = initializeEngine
 
 // code generation engine
-// (obj, obj) -> null
-function initializeEngine (opts, argv) {
+// (obj, obj, fn) -> null
+function initializeEngine (opts, argv, cb) {
   argv = argv || {}
+  cb = cb || noop
   argv.dirname = __dirname
   assert.equal(typeof opts, 'object')
   assert.equal(typeof argv, 'object')
@@ -29,6 +31,7 @@ function initializeEngine (opts, argv) {
   ]
   series(fns, function (err) {
     if (err) throw err
+    cb()
   })
 }
 
