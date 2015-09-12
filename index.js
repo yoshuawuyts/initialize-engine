@@ -4,6 +4,7 @@ const series = require('run-series')
 const mustache = require('mustache')
 const through = require('through2')
 const assert = require('assert')
+const xtend = require('xtend')
 const path = require('path')
 const fs = require('fs')
 
@@ -16,6 +17,9 @@ function initializeEngine (opts, argv) {
   argv.dirname = __dirname
   assert.equal(typeof opts, 'object')
   assert.equal(typeof argv, 'object')
+
+  const base = { dependencies: [], devDependencies: [] }
+  opts = xtend(base, opts)
 
   const fns = [
     runPre.bind(null, opts.pre, argv),
@@ -50,7 +54,7 @@ function createFiles (files, argv, templates, cb) {
   function mapFn (file) {
     const tempDir = path.resolve(templates)
     const inFile = path.join(tempDir, file.replace(/^\./, '_.'))
-    const outFile = path.join(dir, file)
+    const outFile = path.resolve(path.join(dir, file))
 
     return function (done) {
       fs.createReadStream(inFile)
