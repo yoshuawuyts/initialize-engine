@@ -24,7 +24,8 @@ function initializeEngine (opts, argv) {
   const fns = [
     runPre.bind(null, opts.pre, argv),
     createFiles.bind(null, opts.files, argv, opts.templates),
-    installDeps.bind(null, opts.devDependencies, argv)
+    installDeps.bind(null, opts.devDependencies, argv),
+    installDeps.bind(null, opts.dependencies, argv)
   ]
   series(fns, function (err) {
     if (err) throw err
