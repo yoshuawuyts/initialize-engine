@@ -1,6 +1,6 @@
 {
   "name": "initialize-engine",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Code generation engine",
   "main": "index.js",
   "scripts": {
