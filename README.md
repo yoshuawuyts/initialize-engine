@@ -5,7 +5,8 @@
 [![Downloads][downloads-image]][downloads-url]
 [![js-standard-style][standard-image]][standard-url]
 
-Code generation engine.
+Code generation engine. Inspired by the work in
+[mattdesl/quick-stub](https://github.com/mattdesl/quick-stub).
 
 ## Installation
 ```sh
@@ -49,8 +50,7 @@ function createDir (argv, next) {
 Run the engine with the given opts, and an optional settings object to extend.
 Opts are run in sequence. The following opts are available:
 - __pre__: an array of functions that can execucute arbitrary code. Use it to
-  prompt for user input, create repositories, query data and more. Function are
-  passed thekkkkkk
+  prompt for user input, create repositories, query data and more.
 - __files__: files to be written. Dotfiles need to be prepended with a `_`.
   Files are populated with variables using the `{{varName}}` syntax.
 - __devDependencies__: npm dev dependencies to be installed.
