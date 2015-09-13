@@ -45,7 +45,7 @@ function createDir (argv, next) {
 ```
 
 ## API
-### initializEngine(opts, argv)
+### initializeEngine(opts, argv)
 Run the engine with the given opts, and an optional settings object to extend.
 Opts are run in sequence. The following opts are available:
 - __pre__: an array of functions that can execucute arbitrary code. Use it to
