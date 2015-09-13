@@ -8,7 +8,13 @@
     "test:cov": "standard && NODE_ENV=test istanbul cover test.js"
   },
   "repository": "yoshuawuyts/initialize-engine",
-  "keywords": [],
+  "keywords": [
+    "initialize",
+    "engine",
+    "create",
+    "yo",
+    "initialize"
+  ],
   "license": "MIT",
   "dependencies": {
     "mustache": "^2.1.3",
