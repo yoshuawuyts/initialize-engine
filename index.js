@@ -26,8 +26,8 @@ function initializeEngine (opts, argv, cb) {
   const fns = [
     runPre.bind(null, opts.pre, argv),
     createFiles.bind(null, opts.files, argv, opts.templates),
-    installDeps.bind(null, opts.devDependencies, argv),
-    installDeps.bind(null, opts.dependencies, argv)
+    installDeps.bind(null, opts.devDependencies, '-D ', argv),
+    installDeps.bind(null, opts.dependencies, '-S ', argv)
   ]
   series(fns, function (err) {
     if (err) throw err
@@ -80,12 +80,14 @@ function createFiles (files, argv, templates, cb) {
 }
 
 // install npm dependencies
-// (obj, obj, fn) -> null
-function installDeps (deps, argv, cb) {
+// (obj, str, obj, fn) -> null
+function installDeps (deps, cliOpts, argv, cb) {
   const mods = deps.map(function (dep) {
     return function (done) {
       process.stdout.write('pkg: ' + dep + '\n')
-      exec(['npm i -D', dep, '--cache-min Infinity'].join(' '), function (err) {
+      const infinity = '--cache-min Infinity'
+      const args = [ 'npm i', cliOpts, dep, infinity ].join(' ')
+      exec(args, function (err) {
         if (err) return cb(err)
       })
     }
